@@ -1,21 +1,28 @@
 import React from 'react';
-import './Person.css';
-import Radium from 'radium';
+import styled from 'styled-components';
+
+const StyledDiv = styled.div`
+            width: 40%;
+            max-height: 40px;
+            margin: 16px auto;
+            border: 1px solid #eee;
+            box-shadow: 0 2px 3px #ccc;
+            padding: 60px;
+            text-align: center;
+            @media (min-width: 500px): {
+                width: 200px;
+            }
+        `;
 
 // stateless
 const person = ( props ) => {
-    const personStyle = {
-        '@media (min-width: 500px)': {
-            width: '200px'
-        }
-    };
     return (
-        <div className="person" style={personStyle}>
+        <StyledDiv>
             <p onClick={props.deletePersonHandler}> I am {props.name} and {props.age} years old.</p>
             <p> {props.children} </p>
             <input type="text" value={props.name} onChange={props.changeStateHandler}/>
-        </div>
+        </StyledDiv>
     )
 };
 
-export default Radium(person);
+export default person;

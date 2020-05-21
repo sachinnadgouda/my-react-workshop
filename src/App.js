@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import './App.css';
-import Radium, {StyleRoot} from 'radium';
 import Person from './Person/Person';
 
 // Stateful
@@ -105,14 +104,12 @@ class App extends Component {
         }
 
         return (
-            <StyleRoot>
-                <div className="App">
-                    <button style={buttonStyle} onClick={this.filterResultsHandler}>{buttonText}</button>
-                    { persons }
-                </div>
-            </StyleRoot>
+            <div className="App">
+                <button style={buttonStyle} onClick={this.filterResultsHandler}>{buttonText}</button>
+                { persons }
+            </div>
         );
     }
 }
 
-export default Radium(App);
+export default App;
