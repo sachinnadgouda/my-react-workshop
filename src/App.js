@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import './App.css';
-import Radium from 'radium';
+import Radium, {StyleRoot} from 'radium';
 import Person from './Person/Person';
 
 // Stateful
@@ -59,7 +59,11 @@ class App extends Component {
         let buttonStyle = {
             color: 'white',
             backgroundColor: 'green',
-            cursor: 'pointer'
+            cursor: 'pointer',
+            ':hover': {
+                backgroundColor: 'lightgreen',
+                color: 'black'
+            }
         };
 
         let persons = null;
@@ -74,6 +78,10 @@ class App extends Component {
                 classes.push('bold');
             }
             buttonStyle.backgroundColor = 'red';
+            buttonStyle[':hover'] = {
+                backgroundColor: 'salmon',
+                color: 'black'
+            };
             persons = (
                 <div>
                     <h1 className={classes.join(' ')}>Showing {this.state.persons.length} persons</h1>
@@ -97,10 +105,12 @@ class App extends Component {
         }
 
         return (
-            <div className="App">
-                <button style={buttonStyle} onClick={this.filterResultsHandler}>{buttonText}</button>
-                { persons }
-            </div>
+            <StyleRoot>
+                <div className="App">
+                    <button style={buttonStyle} onClick={this.filterResultsHandler}>{buttonText}</button>
+                    { persons }
+                </div>
+            </StyleRoot>
         );
     }
 }
