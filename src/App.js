@@ -53,30 +53,51 @@ class App extends Component {
             color: 'blue',
         };
 
+
+        let buttonText = 'Show Persons';
+        let buttonStyle = {
+            color: 'white',
+            backgroundColor: 'green',
+            cursor: 'pointer'
+        };
+
         let persons = null;
 
         if ( this.state.showPersons ) {
+            buttonText = 'Hide Persons';
+            let classes = [];
+            if(this.state.persons.length <= 2){
+                classes.push('red');
+            }
+            if(this.state.persons.length <= 1){
+                classes.push('bold');
+            }
+            buttonStyle.backgroundColor = 'red';
             persons = (
                 <div>
-                    {
-                        this.state.persons.map((person, index) => {
-                            return (
-                                <Person
-                                    key={person.id}
-                                    name={person.name}
-                                    age={person.age}
-                                    changeStateHandler={(event) => this.changeStateHandler(event, person.id)}
-                                    deletePersonHandler={() => this.deletePersonHandler(index)} />
-                            )
-                        })
-                    }
+                    <h1 className={classes.join(' ')}>Showing {this.state.persons.length} persons</h1>
+                    <div>
+                        {
+                            this.state.persons.map((person, index) => {
+                                return (
+                                    <Person
+                                        key={person.id}
+                                        name={person.name}
+                                        age={person.age}
+                                        changeStateHandler={(event) => this.changeStateHandler(event, person.id)}
+                                        deletePersonHandler={() => this.deletePersonHandler(index)} />
+                                )
+                            })
+                        }
+                    </div>
                 </div>
             );
+
         }
+
         return (
             <div className="App">
-                <h1 style={style}>This is a react app</h1>
-                <button onClick={this.filterResultsHandler}>Filter</button>
+                <button style={buttonStyle} onClick={this.filterResultsHandler}>{buttonText}</button>
                 { persons }
             </div>
         );
