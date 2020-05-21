@@ -6,23 +6,23 @@ import Person from './Person/Person';
 class App extends Component {
     state = {
         persons: [
-            {name: 'sachin', age: 28},
-            {name: 'Chaitra', age: 29},
-            {name: 'Test', age: 30}
+            { id: 'person_1', name: 'sachin', age: 28 },
+            { id: 'person_2', name: 'Chaitra', age: 29 },
+            { id: 'person_3', name: 'Test', age: 30 }
         ],
         showPersons: false,
     };
 
-    changeStateHandler = (newName) => {
-        const state = {
-            persons: [
-                {name: newName, age: Math.floor(Math.random() * 30)},
-                {name: 'Chaitra', age: Math.floor(Math.random() * 30)},
-                {name: 'Test', age: Math.floor(Math.random() * 30)}
-            ]
+    changeStateHandler = (event, personId) => {
+        const personIndex = this.state.persons.findIndex( p => { return p.id === personId });
+        // const person = this.state.persons.find(p => { return p.id === personId});
+        const person = {
+            ...this.state.persons[personIndex]
         };
-        this.setState({...state});
-        console.log("was clicked");
+        person.name = event.target.value;
+        const persons = [...this.state.persons];
+        persons[personIndex] = person;
+        this.setState({persons: persons});
     };
 
     changeNameHandler = (event) => {
@@ -37,6 +37,13 @@ class App extends Component {
         console.log("was clicked");
     };
 
+    deletePersonHandler = (index) => {
+        // const persons = [...this.state.persons]
+        const persons = this.state.persons.slice();
+        persons.splice(index, 1);
+        this.setState({persons: persons})
+    };
+
     filterResultsHandler = () => {
         this.setState({showPersons: !this.state.showPersons})
     };
@@ -45,34 +52,32 @@ class App extends Component {
         const style = {
             color: 'blue',
         };
+
+        let persons = null;
+
+        if ( this.state.showPersons ) {
+            persons = (
+                <div>
+                    {
+                        this.state.persons.map((person, index) => {
+                            return (
+                                <Person
+                                    key={person.id}
+                                    name={person.name}
+                                    age={person.age}
+                                    changeStateHandler={(event) => this.changeStateHandler(event, person.id)}
+                                    deletePersonHandler={() => this.deletePersonHandler(index)} />
+                            )
+                        })
+                    }
+                </div>
+            );
+        }
         return (
             <div className="App">
                 <h1 style={style}>This is a react app</h1>
                 <button onClick={this.filterResultsHandler}>Filter</button>
-                { this.state.showPersons ?
-                    <div >
-                        <Person
-                            name={this.state.persons[0].name}
-                            age={this.state.persons[0].age}
-                            changeStateHandler={() => this.changeStateHandler("Test 1")}
-                            changeNameHandler={this.changeNameHandler}
-                        >
-                            My hobbies: Cricket and Football
-                        </Person>
-                        <Person
-                            name={this.state.persons[1].name}
-                            age={this.state.persons[1].age}
-                            changeStateHandler={this.changeStateHandler.bind(this, "Test 2")}
-                            changeNameHandler={this.changeNameHandler}
-                        />
-                        <Person
-                            name={this.state.persons[2].name}
-                            age={this.state.persons[2].age}
-                            changeStateHandler={this.changeStateHandler.bind(this, "Test 3")}
-                            changeNameHandler={this.changeNameHandler}
-                        />
-                    </div> : null
-                }
+                { persons }
             </div>
         );
     }
