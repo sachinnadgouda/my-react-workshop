@@ -16,6 +16,10 @@ const StyledDiv = styled.div`
 
 // stateless
 const person = ( props ) => {
+    const prob = Math.random();
+    if(prob > 0.7){
+        throw Error('Something went wrong');
+    }
     return (
         <StyledDiv>
             <p onClick={props.deletePersonHandler}> I am {props.name} and {props.age} years old.</p>
