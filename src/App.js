@@ -1,20 +1,37 @@
 import React, {Component} from 'react';
 import './App.css';
 import Person from './Person/Person';
+import styled from 'styled-components'
+
+const StyledButton = styled.button`
+    background-color: ${props => props.show ? 'red' : 'green'};
+    color: white;
+    font: inherit;
+    border: 1px solid blue;
+    padding: 8px;
+    cursor: pointer;
+    
+    &:hover {
+         background-color: ${props => props.show ? 'salmon' : 'lightgreen'};
+         color: black;
+    }
+`;
 
 // Stateful
 class App extends Component {
     state = {
         persons: [
-            { id: 'person_1', name: 'sachin', age: 28 },
-            { id: 'person_2', name: 'Chaitra', age: 29 },
-            { id: 'person_3', name: 'Test', age: 30 }
+            {id: 'person_1', name: 'sachin', age: 28},
+            {id: 'person_2', name: 'Chaitra', age: 29},
+            {id: 'person_3', name: 'Test', age: 30}
         ],
         showPersons: false,
     };
 
     changeStateHandler = (event, personId) => {
-        const personIndex = this.state.persons.findIndex( p => { return p.id === personId });
+        const personIndex = this.state.persons.findIndex(p => {
+            return p.id === personId
+        });
         // const person = this.state.persons.find(p => { return p.id === personId});
         const person = {
             ...this.state.persons[personIndex]
@@ -49,38 +66,24 @@ class App extends Component {
     };
 
     render() {
-        const style = {
-            color: 'blue',
-        };
-
-
         let buttonText = 'Show Persons';
-        let buttonStyle = {
-            color: 'white',
-            backgroundColor: 'green',
-            cursor: 'pointer',
-            ':hover': {
-                backgroundColor: 'lightgreen',
-                color: 'black'
-            }
-        };
-
         let persons = null;
 
-        if ( this.state.showPersons ) {
+        if (this.state.showPersons) {
             buttonText = 'Hide Persons';
             let classes = [];
-            if(this.state.persons.length <= 2){
+            if (this.state.persons.length <= 2) {
                 classes.push('red');
             }
-            if(this.state.persons.length <= 1){
+            if (this.state.persons.length <= 1) {
                 classes.push('bold');
             }
-            buttonStyle.backgroundColor = 'red';
-            buttonStyle[':hover'] = {
-                backgroundColor: 'salmon',
-                color: 'black'
-            };
+
+            // buttonStyle.backgroundColor = 'red';
+            // buttonStyle[':hover'] = {
+            //     backgroundColor: 'salmon',
+            //     color: 'black'
+            // };
             persons = (
                 <div>
                     <h1 className={classes.join(' ')}>Showing {this.state.persons.length} persons</h1>
@@ -93,7 +96,7 @@ class App extends Component {
                                         name={person.name}
                                         age={person.age}
                                         changeStateHandler={(event) => this.changeStateHandler(event, person.id)}
-                                        deletePersonHandler={() => this.deletePersonHandler(index)} />
+                                        deletePersonHandler={() => this.deletePersonHandler(index)}/>
                                 )
                             })
                         }
@@ -105,8 +108,11 @@ class App extends Component {
 
         return (
             <div className="App">
-                <button style={buttonStyle} onClick={this.filterResultsHandler}>{buttonText}</button>
-                { persons }
+                <StyledButton
+                    show={this.state.showPersons}
+                    onClick={this.filterResultsHandler}>{buttonText}
+                </StyledButton>
+                {persons}
             </div>
         );
     }
