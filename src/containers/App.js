@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import './App.css';
-import Person from '../components/Persons/Person/Person';
-import ErrorBoundary from '../components/ErrorBoundary/ErrorBoundary';
+import Persons from '../components/Persons/Persons';
+import Cockpit from '../components/Cockpit/Cockpit'
 
 // Stateful
 class App extends Component {
@@ -26,18 +26,6 @@ class App extends Component {
         this.setState({persons: persons});
     };
 
-    changeNameHandler = (event) => {
-        const state = {
-            persons: [
-                {name: event.target.value, age: Math.floor(Math.random() * 30)},
-                {name: 'Chaitra', age: Math.floor(Math.random() * 30)},
-                {name: 'Test', age: Math.floor(Math.random() * 30)}
-            ]
-        };
-        this.setState({...state});
-        console.log("was clicked");
-    };
-
     deletePersonHandler = (index) => {
         // const persons = [...this.state.persons]
         const persons = this.state.persons.slice();
@@ -50,59 +38,29 @@ class App extends Component {
     };
 
     render() {
-        let buttonText = 'Show Persons';
-        let buttonStyle = {
-            color: 'white',
-            backgroundColor: 'green',
-            cursor: 'pointer',
-            ':hover': {
-                backgroundColor: 'lightgreen',
-                color: 'black'
-            }
-        };
-
         let persons = null;
 
         if ( this.state.showPersons ) {
-            buttonText = 'Hide Persons';
-            let classes = [];
-            if(this.state.persons.length <= 2){
-                classes.push('red');
-            }
-            if(this.state.persons.length <= 1){
-                classes.push('bold');
-            }
-            buttonStyle.backgroundColor = 'red';
-            buttonStyle[':hover'] = {
-                backgroundColor: 'salmon',
-                color: 'black'
-            };
-            persons = (
+            persons =
                 <div>
-                    <h1 className={classes.join(' ')}>Showing {this.state.persons.length} persons</h1>
-                    <div>
-                        {
-                            this.state.persons.map((person, index) => {
-                                return (
-                                    <ErrorBoundary key={person.id} >
-                                        <Person
-                                            name={person.name}
-                                            age={person.age}
-                                            changeStateHandler={(event) => this.changeStateHandler(event, person.id)}
-                                            deletePersonHandler={() => this.deletePersonHandler(index)} />
-                                    </ErrorBoundary>
-                                )
-                            })
-                        }
-                    </div>
-                </div>
-            );
+                    <Persons
+                        persons={this.state.persons}
+                        changeStateHandler={this.changeStateHandler}
+                        deletePersonHandler={this.deletePersonHandler}
+                    />
+                </div>;
 
         }
 
         return (
             <div className="App">
-                <button style={buttonStyle} onClick={this.filterResultsHandler}>{buttonText}</button>
+                <div>
+                    <Cockpit
+                        show={this.state.showPersons}
+                        persons={this.state.persons}
+                        filterResultsHandler={this.filterResultsHandler}
+                    />
+                </div>
                 { persons }
             </div>
         );
