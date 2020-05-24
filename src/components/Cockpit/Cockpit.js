@@ -15,6 +15,7 @@ const cockpit = (props) => {
 
     return (
         <div>
+            <p> { props.title } </p>
             <button className={buttonClass} onClick={props.filterResultsHandler}>{buttonText}</button>
             { info }
         </div>
