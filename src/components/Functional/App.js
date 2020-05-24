@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
-import logo from './logo.svg';
 import './App.css';
-import Person from './Person/Person';
+import Person from '../Persons/Person/Person';
 
 // function component way
 const App = ( props ) => {
