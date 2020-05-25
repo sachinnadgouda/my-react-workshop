@@ -5,14 +5,27 @@ import Cockpit from '../components/Cockpit/Cockpit'
 
 // Stateful
 class App extends Component {
-    state = {
-        persons: [
-            { id: 'person_1', name: 'sachin', age: 28 },
-            { id: 'person_2', name: 'Chaitra', age: 29 },
-            { id: 'person_3', name: 'Test', age: 30 }
-        ],
-        showPersons: false,
-    };
+    constructor(props){
+        super(props);
+        this.state = {
+            persons: [
+                { id: 'person_1', name: 'sachin', age: 28 },
+                { id: 'person_2', name: 'Chaitra', age: 29 },
+                { id: 'person_3', name: 'Test', age: 30 }
+            ],
+            showPersons: false,
+        };
+        console.log("[App.js] constructor", this.state);
+    }
+
+    static  getDerivedStateFromProps(props, state){
+        console.log('[App.js] getDerivedStateFromProps', props);
+        return state;
+    }
+
+    componentDidMount() {
+        console.log('[App.js] componentDidMount');
+    }
 
     changeStateHandler = (event, personId) => {
         const personIndex = this.state.persons.findIndex( p => { return p.id === personId });
@@ -38,6 +51,7 @@ class App extends Component {
     };
 
     render() {
+        console.log('[App.js] rendering...');
         let persons = null;
 
         if ( this.state.showPersons ) {

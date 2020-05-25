@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {Component} from 'react';
 import styled from 'styled-components';
 
 const StyledDiv = styled.div`
@@ -15,14 +15,22 @@ const StyledDiv = styled.div`
         `;
 
 // stateless
-const person = ( props ) => {
-    return (
-        <StyledDiv>
-            <p onClick={props.deletePersonHandler}> I am {props.name} and {props.age} years old.</p>
-            <p> {props.children} </p>
-            <input type="text" value={props.name} onChange={props.changeStateHandler}/>
-        </StyledDiv>
-    )
-};
+class Person extends Component {
 
-export default person;
+    componentDidMount() {
+        console.log('[Person.js] componentDidMount');
+    }
+
+    render () {
+        console.log('[Person.js] rendering...');
+        return (
+            <StyledDiv>
+                <p onClick={this.props.deletePersonHandler}> I am {this.props.name} and {this.props.age} years old.</p>
+                <p> {this.props.children} </p>
+                <input type="text" value={this.props.name} onChange={this.props.changeStateHandler}/>
+            </StyledDiv>
+        );
+    }
+}
+
+export default Person;
