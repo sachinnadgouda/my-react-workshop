@@ -1,14 +1,14 @@
-import React, {Component} from 'react';
+import React, {PureComponent} from 'react';
 import ErrorBoundary from "../ErrorBoundary/ErrorBoundary";
 import Person from "./Person/Person";
 
-class Persons extends Component {
+class Persons extends PureComponent {
 
-    shouldComponentUpdate(nextProps, nextState, nextContext) {
-        // should be deep checked, this is shallow check
-        // works because we changed persons by creation of new array in App.js changeStateHandler
-        return nextProps.persons !== this.props.persons;
-    }
+    // shouldComponentUpdate(nextProps, nextState, nextContext) {
+    //     // should be deep checked, this is shallow check
+    //     // works because we changed persons by creation of new array in App.js changeStateHandler
+    //     return nextProps.persons !== this.props.persons;
+    // }
 
     componentDidMount() {
         console.log('[Persons.js] componentDidMount');
