@@ -19,10 +19,16 @@ const StyledDiv = styled.div`
 // stateless
 class Person extends Component {
 
+    static contextType = AuthContext;
 
     componentDidMount() {
         console.log('[Person.js] componentDidMount');
-        if(this.inputElement !== undefined){
+        this.inputElement.focus();
+
+    }
+
+    componentDidUpdate(prevProps, prevState, snapshot) {
+        if(this.context.authenticated) {
             this.inputElement.focus();
         }
     }
@@ -30,27 +36,24 @@ class Person extends Component {
     render () {
         console.log('[Person.js] rendering...');
         return (
-            <AuthContext.Consumer>
-                {
-                    (context) =>
-                        <StyledDiv>
-                            <p> {context.authenticated ? "Authenticated" : "Please Authenticate"} </p>
-                            <p onClick={this.props.deletePersonHandler}>
-                                I am {this.props.name} and {this.props.age} years old.
-                            </p>
-                            <p> {this.props.children} </p>
-                            <input
-                                key={this.props.id}
-                                ref={(inputElement) => {
-                                    this.inputElement = inputElement
-                                }}
-                                type="text"
-                                value={this.props.name}
-                                onChange={this.props.changeStateHandler}
-                            />
-                        </StyledDiv>
-                }
-            </AuthContext.Consumer>
+
+            <StyledDiv>
+                <p> {this.context.authenticated ? "Authenticated" : "Please Authenticate"} </p>
+                <p onClick={this.props.deletePersonHandler}>
+                    I am {this.props.name} and {this.props.age} years old.
+                </p>
+                <p> {this.props.children} </p>
+                <input
+                    key={this.props.id}
+                    ref={(inputElement) => {
+                        this.inputElement = inputElement
+                    }}
+                    type="text"
+                    value={this.props.name}
+                    onChange={this.props.changeStateHandler}
+                />
+            </StyledDiv>
+
         );
     }
 }
