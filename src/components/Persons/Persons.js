@@ -20,6 +20,7 @@ class Persons extends PureComponent {
             return (
                 <ErrorBoundary key={person.id}>
                     <Person
+                        id={person.id}
                         name={person.name}
                         age={person.age}
                         changeStateHandler={(event) => this.props.changeStateHandler(event, person.id)}

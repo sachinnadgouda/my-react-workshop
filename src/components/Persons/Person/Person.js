@@ -18,23 +18,34 @@ const StyledDiv = styled.div`
 // stateless
 class Person extends Component {
 
+
     componentDidMount() {
         console.log('[Person.js] componentDidMount');
+        this.inputElement.focus();
     }
 
     render () {
         console.log('[Person.js] rendering...');
         return (
             <StyledDiv>
-                <p onClick={this.props.deletePersonHandler}> I am {this.props.name} and {this.props.age} years old.</p>
+                <p onClick={this.props.deletePersonHandler}>
+                    I am {this.props.name} and {this.props.age} years old.
+                </p>
                 <p> {this.props.children} </p>
-                <input type="text" value={this.props.name} onChange={this.props.changeStateHandler}/>
+                <input
+                    key={this.props.id}
+                    ref={(inputElement) => {this.inputElement = inputElement}}
+                    type="text"
+                    value={this.props.name}
+                    onChange={this.props.changeStateHandler}
+                />
             </StyledDiv>
         );
     }
 }
 
 Person.propTypes = {
+    id: PropTypes.string,
     click: PropTypes.func,
     name: PropTypes.string,
     age: PropTypes.number,
