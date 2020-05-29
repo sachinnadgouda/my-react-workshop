@@ -14,21 +14,23 @@ class Persons extends PureComponent {
         console.log('[Persons.js] componentDidMount');
     }
 
-    render (){
+    render () {
         console.log('[Persons.js] rendering...');
-        return this.props.persons.map((person, index) => {
-            return (
-                <ErrorBoundary key={person.id}>
-                    <Person
-                        id={person.id}
-                        name={person.name}
-                        age={person.age}
-                        changeStateHandler={(event) => this.props.changeStateHandler(event, person.id)}
-                        deletePersonHandler={() => this.props.deletePersonHandler(index)}/>
-                </ErrorBoundary>
-            )
-        });
-    }
+        return (
+            this.props.persons.map((person, index) => {
+                return (
+                    <ErrorBoundary key={person.id}>
+                        <Person
+                            id={person.id}
+                            name={person.name}
+                            age={person.age}
+                            changeStateHandler={(event) => this.props.changeStateHandler(event, person.id)}
+                            deletePersonHandler={() => this.props.deletePersonHandler(index)}/>
+                    </ErrorBoundary>
+                )
+            })
+        );
+    };
 }
 
 export default Persons;

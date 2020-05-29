@@ -1,5 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import './Cockpit.css';
+import AuthContext from '../../context/auth-context'
 
 // stateless
 const cockpit = (props) => {
@@ -33,6 +34,16 @@ const cockpit = (props) => {
             >
                 {buttonText}
             </button>
+            <AuthContext.Consumer>
+                {
+                    (context) =>
+                        <button
+                            onClick={context.login}
+                        >
+                            Authenticate
+                        </button>
+                }
+            </AuthContext.Consumer>
             { info }
         </div>
     )

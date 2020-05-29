@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
+import AuthContext from '../../../context/auth-context'
 
 const StyledDiv = styled.div`
             width: 40%;
@@ -21,25 +22,35 @@ class Person extends Component {
 
     componentDidMount() {
         console.log('[Person.js] componentDidMount');
-        this.inputElement.focus();
+        if(this.inputElement !== undefined){
+            this.inputElement.focus();
+        }
     }
 
     render () {
         console.log('[Person.js] rendering...');
         return (
-            <StyledDiv>
-                <p onClick={this.props.deletePersonHandler}>
-                    I am {this.props.name} and {this.props.age} years old.
-                </p>
-                <p> {this.props.children} </p>
-                <input
-                    key={this.props.id}
-                    ref={(inputElement) => {this.inputElement = inputElement}}
-                    type="text"
-                    value={this.props.name}
-                    onChange={this.props.changeStateHandler}
-                />
-            </StyledDiv>
+            <AuthContext.Consumer>
+                {
+                    (context) =>
+                        <StyledDiv>
+                            <p> {context.authenticated ? "Authenticated" : "Please Authenticate"} </p>
+                            <p onClick={this.props.deletePersonHandler}>
+                                I am {this.props.name} and {this.props.age} years old.
+                            </p>
+                            <p> {this.props.children} </p>
+                            <input
+                                key={this.props.id}
+                                ref={(inputElement) => {
+                                    this.inputElement = inputElement
+                                }}
+                                type="text"
+                                value={this.props.name}
+                                onChange={this.props.changeStateHandler}
+                            />
+                        </StyledDiv>
+                }
+            </AuthContext.Consumer>
         );
     }
 }

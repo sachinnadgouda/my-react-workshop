@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import './App.css';
 import Persons from '../components/Persons/Persons';
 import Cockpit from '../components/Cockpit/Cockpit'
-
+import AuthContext from '../context/auth-context'
 // Stateful
 class App extends Component {
     constructor(props){
@@ -14,6 +14,7 @@ class App extends Component {
                 { id: 'person_3', name: 'Test', age: 30 }
             ],
             showPersons: false,
+            authenticated: false
         };
         console.log("[App.js] constructor", this.state);
     }
@@ -26,6 +27,10 @@ class App extends Component {
     componentDidMount() {
         console.log('[App.js] componentDidMount');
     }
+
+    loginHandler = () => {
+      this.setState({authenticated: true});
+    };
 
     changeStateHandler = (event, personId) => {
         const personIndex = this.state.persons.findIndex( p => { return p.id === personId });
@@ -68,15 +73,18 @@ class App extends Component {
 
         return (
             <div className="App">
-                <div>
-                    <Cockpit
-                        title={this.props.title}
-                        show={this.state.showPersons}
-                        persons={this.state.persons}
-                        filterResultsHandler={this.filterResultsHandler}
-                    />
-                </div>
-                { persons }
+                <AuthContext.Provider value={{authenticated: this.state.authenticated, login: this.loginHandler}}>
+                    <div>
+                        <Cockpit
+                            title={this.props.title}
+                            show={this.state.showPersons}
+                            persons={this.state.persons}
+                            filterResultsHandler={this.filterResultsHandler}
+                            authenticate={this.loginHandler}
+                        />
+                    </div>
+                    { persons }
+                </AuthContext.Provider>
             </div>
         );
     }
