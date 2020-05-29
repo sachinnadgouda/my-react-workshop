@@ -1,12 +1,15 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import './Cockpit.css';
 
 // stateless
 const cockpit = (props) => {
 
     // eslint-disable-next-line react-hooks/rules-of-hooks
+    const toggleButtonRef = useRef(null);
+    // eslint-disable-next-line react-hooks/rules-of-hooks
     useEffect(() => {
         console.log('[Cockpit.js] useEffect');
+        toggleButtonRef.current.click();
     }, [props.persons]);
     // keep deps array blank if you want it to render only once else it will render every time deps change
 
@@ -23,7 +26,13 @@ const cockpit = (props) => {
     return (
         <div>
             <h1> { props.title } </h1>
-            <button className={buttonClass} onClick={props.filterResultsHandler}>{buttonText}</button>
+            <button
+                ref={toggleButtonRef}
+                className={buttonClass}
+                onClick={props.filterResultsHandler}
+            >
+                {buttonText}
+            </button>
             { info }
         </div>
     )
