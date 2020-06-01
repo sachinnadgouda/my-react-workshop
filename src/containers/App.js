@@ -4,6 +4,8 @@ import Persons from '../components/Persons/Persons';
 import Cockpit from '../components/Cockpit/Cockpit'
 import AuthContext from '../context/auth-context'
 import classes from './App.css';
+import Layout from "../components/Layout/Layout";
+import BurgerBuilder from "./BurgerBuilder/BurgerBuilder";
 
 // Stateful
 class App extends Component {
@@ -75,18 +77,21 @@ class App extends Component {
 
         return (
             <div className={classes.App}>
-                <AuthContext.Provider value={{authenticated: this.state.authenticated, login: this.loginHandler}}>
-                    <div>
-                        <Cockpit
-                            title={this.props.title}
-                            show={this.state.showPersons}
-                            persons={this.state.persons}
-                            filterResultsHandler={this.filterResultsHandler}
-                            authenticate={this.loginHandler}
-                        />
-                    </div>
-                    { persons }
-                </AuthContext.Provider>
+                <Layout>
+                    <BurgerBuilder></BurgerBuilder>
+                </Layout>
+                {/*<AuthContext.Provider value={{authenticated: this.state.authenticated, login: this.loginHandler}}>*/}
+                {/*    <div>*/}
+                {/*        <Cockpit*/}
+                {/*            title={this.props.title}*/}
+                {/*            show={this.state.showPersons}*/}
+                {/*            persons={this.state.persons}*/}
+                {/*            filterResultsHandler={this.filterResultsHandler}*/}
+                {/*            authenticate={this.loginHandler}*/}
+                {/*        />*/}
+                {/*    </div>*/}
+                {/*    { persons }*/}
+                {/*</AuthContext.Provider>*/}
             </div>
         );
     }
