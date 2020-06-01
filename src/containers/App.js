@@ -3,6 +3,8 @@ import './App.css';
 import Persons from '../components/Persons/Persons';
 import Cockpit from '../components/Cockpit/Cockpit'
 import AuthContext from '../context/auth-context'
+import classes from './App.css';
+
 // Stateful
 class App extends Component {
     constructor(props){
@@ -72,7 +74,7 @@ class App extends Component {
         }
 
         return (
-            <div className="App">
+            <div className={classes.App}>
                 <AuthContext.Provider value={{authenticated: this.state.authenticated, login: this.loginHandler}}>
                     <div>
                         <Cockpit
