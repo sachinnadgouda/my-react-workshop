@@ -9,6 +9,16 @@ const burgerIngredient = (props) => {
         return <div className={className}/>
     };
 
+    // const getClassNameFromProp = (propType) => {
+    //     const className = ""
+    //     if(propType.toString().includes("-")){
+    //         propType.toString()
+    //     } else {
+    //         propType.toString()
+    //     }
+    //     return className
+    // };
+
     switch (props.type) {
         case('bread-bottom'):
             ingredients = getIngredientStructure(classes.BreadBottom);
@@ -25,7 +35,7 @@ const burgerIngredient = (props) => {
         case('salad'):
             ingredients = getIngredientStructure(classes.Salad);
             break;
-        case('Meat'):
+        case('meat'):
             ingredients = getIngredientStructure(classes.Meat);
             break;
         case('bacon'):
@@ -42,7 +52,7 @@ const burgerIngredient = (props) => {
 };
 
 burgerIngredient.propTypes = {
-    type: PropTypes.string
+    type: PropTypes.string.isRequired
 };
 
 export default burgerIngredient;
