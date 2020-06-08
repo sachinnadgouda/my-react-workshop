@@ -9,6 +9,7 @@ const burgerIngredient = (props) => {
         return <div className={className}/>
     };
 
+    // TODO: optimise switch case
     // const getClassNameFromProp = (propType) => {
     //     const className = ""
     //     if(propType.toString().includes("-")){
